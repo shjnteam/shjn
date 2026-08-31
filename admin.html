@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#6f7654" />
+  <title>لوحة تحكم روابط شَجَن</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <div id="authScreen" class="auth-screen">
+    <form id="loginForm" class="auth-card" autocomplete="on">
+      <div class="auth-logo">شَجَن</div>
+      <h1>لوحة التحكم</h1>
+      <p id="authDescription">سجّلي الدخول لإدارة الصفحة.</p>
+
+      <div id="localModeNotice" class="notice warning hidden">
+        وضع تجريبي محلي: البيانات محفوظة في هذا المتصفح فقط. فعّلي Supabase قبل النشر الفعلي.
+      </div>
+
+      <div id="loginFields">
+        <label class="field">
+          <span>البريد الإلكتروني</span>
+          <input id="loginEmail" type="email" autocomplete="username" required />
+        </label>
+        <label class="field">
+          <span>كلمة المرور</span>
+          <input id="loginPassword" type="password" autocomplete="current-password" required />
+        </label>
+      </div>
+
+      <button id="loginButton" class="primary-button full-width" type="submit">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        دخول
+      </button>
+    </form>
+  </div>
+
+  <div id="dashboard" class="dashboard hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-mark">شَجَن</span>
+        <small>إدارة صفحة الروابط</small>
+      </div>
+
+      <nav class="dashboard-nav" aria-label="أقسام لوحة التحكم">
+        <button class="nav-button active" data-tab="appearance" type="button">
+          <i class="fa-solid fa-palette"></i>
+          المظهر
+        </button>
+        <button class="nav-button" data-tab="links" type="button">
+          <i class="fa-solid fa-link"></i>
+          الروابط
+        </button>
+        <button class="nav-button" data-tab="analytics" type="button">
+          <i class="fa-solid fa-chart-column"></i>
+          التحليلات
+        </button>
+      </nav>
+
+      <div class="sidebar-actions">
+        <a class="secondary-button full-width" href="index.html" target="_blank" rel="noopener">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          فتح الصفحة
+        </a>
+        <button id="logoutButton" class="ghost-button full-width" type="button">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          تسجيل الخروج
+        </button>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="topbar">
+        <div>
+          <h1 id="tabTitle">تخصيص المظهر</h1>
+          <p id="tabSubtitle">عدّلي هوية الصفحة والخلفية والأزرار.</p>
+        </div>
+        <div id="modeBadge" class="mode-badge"></div>
+      </header>
+
+      <div id="globalNotice" class="notice hidden"></div>
+
+      <section id="tab-appearance" class="tab-panel active">
+        <form id="settingsForm" class="panel-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>هوية الصفحة</h2>
+                <p>الاسم والوصف والشعار وحقوق النشر.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label class="field">
+                <span>اسم العلامة</span>
+                <input id="brandName" type="text" maxlength="60" required />
+              </label>
+
+              <label class="field">
+                <span>عنوان الصفحة</span>
+                <input id="pageTitleInput" type="text" maxlength="80" required />
+              </label>
+
+              <label class="field full">
+                <span>الوصف المختصر</span>
+                <textarea id="pageBioInput" rows="3" maxlength="180"></textarea>
+              </label>
+
+              <label class="field full">
+                <span>نص الحقوق</span>
+                <input id="footerText" type="text" maxlength="120" />
+              </label>
+            </div>
+
+            <div class="upload-row">
+              <div>
+                <strong>الشعار</strong>
+                <p>ارفعي صورة أو استخدمي رابطًا مباشرًا للصورة.</p>
+              </div>
+              <label class="upload-button">
+                <i class="fa-solid fa-upload"></i>
+                رفع شعار
+                <input id="logoFile" type="file" accept="image/*" hidden />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>رابط صورة الشعار</span>
+              <input id="logoUrl" type="text" placeholder="https://..." />
+            </label>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>الخلفية</h2>
+                <p>اختاري لونًا أو صورة خلفية.</p>
+              </div>
+            </div>
+
+            <div class="segmented-control" role="group" aria-label="نوع الخلفية">
+              <label>
+                <input type="radio" name="backgroundType" value="color" checked />
+                <span>لون</span>
+              </label>
+              <label>
+                <input type="radio" name="backgroundType" value="image" />
+                <span>صورة</span>
+              </label>
+            </div>
+
+            <label class="field">
+              <span>لون الخلفية</span>
+              <div class="color-input">
+                <input id="backgroundColor" type="color" value="#f5f2e8" />
+                <input id="backgroundColorText" type="text" value="#f5f2e8" maxlength="7" />
+              </div>
+            </label>
+
+            <div class="upload-row">
+              <div>
+                <strong>صورة الخلفية</strong>
+                <p>يفضل استخدام صورة عمودية وواضحة للجوال.</p>
+              </div>
+              <label class="upload-button">
+                <i class="fa-solid fa-image"></i>
+                رفع صورة
+                <input id="backgroundFile" type="file" accept="image/*" hidden />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>رابط صورة الخلفية</span>
+              <input id="backgroundImageUrl" type="text" placeholder="https://..." />
+            </label>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>شكل الأزرار</h2>
+                <p>ألوان النص والخلفية والحواف والظل.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label class="field">
+                <span>لون الزر</span>
+                <div class="color-input">
+                  <input id="buttonColor" type="color" value="#6f7654" />
+                  <input id="buttonColorText" type="text" value="#6f7654" maxlength="7" />
+                </div>
+              </label>
+
+              <label class="field">
+                <span>لون النص</span>
+                <div class="color-input">
+                  <input id="buttonTextColor" type="color" value="#ffffff" />
+                  <input id="buttonTextColorText" type="text" value="#ffffff" maxlength="7" />
+                </div>
+              </label>
+
+              <label class="field">
+                <span>استدارة الحواف</span>
+                <select id="buttonRadius">
+                  <option value="10">خفيفة</option>
+                  <option value="18">متوسطة</option>
+                  <option value="30">دائرية</option>
+                </select>
+              </label>
+
+              <label class="field checkbox-field">
+                <input id="buttonShadow" type="checkbox" checked />
+                <span>إظهار ظل للأزرار</span>
+              </label>
+            </div>
+
+            <div class="button-preview-wrap">
+              <span>معاينة</span>
+              <button id="buttonPreview" class="button-preview" type="button">
+                <i class="fa-brands fa-instagram"></i>
+                Instagram
+              </button>
+            </div>
+          </article>
+
+          <div class="sticky-save">
+            <button class="primary-button" type="submit">
+              <i class="fa-solid fa-floppy-disk"></i>
+              حفظ التعديلات
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section id="tab-links" class="tab-panel">
+        <div class="links-layout">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2 id="linkFormTitle">إضافة رابط جديد</h2>
+                <p>أضيفي عددًا غير محدود من الروابط.</p>
+              </div>
+            </div>
+
+            <form id="linkForm">
+              <input id="linkId" type="hidden" />
+
+              <label class="field">
+                <span>اسم المنصة أو الرابط</span>
+                <input id="linkTitle" type="text" maxlength="70" placeholder="مثال: WhatsApp" required />
+              </label>
+
+              <label class="field">
+                <span>الرابط</span>
+                <input id="linkUrl" type="text" placeholder="https://..." required />
+              </label>
+
+              <label class="field">
+                <span>الأيقونة</span>
+                <select id="linkIcon">
+                  <option value="link">رابط</option>
+                  <option value="globe">موقع إلكتروني</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="tiktok">TikTok</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="youtube">YouTube</option>
+                  <option value="snapchat">Snapchat</option>
+                  <option value="x-twitter">X</option>
+                  <option value="facebook">Facebook</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="shopping-bag">متجر</option>
+                  <option value="envelope">بريد إلكتروني</option>
+                  <option value="phone">اتصال</option>
+                </select>
+              </label>
+
+              <div class="inline-options">
+                <label class="checkbox-field">
+                  <input id="linkVisible" type="checkbox" checked />
+                  <span>إظهار الرابط</span>
+                </label>
+                <label class="checkbox-field">
+                  <input id="linkNewTab" type="checkbox" checked />
+                  <span>فتح في صفحة جديدة</span>
+                </label>
+              </div>
+
+              <div class="form-actions">
+                <button class="primary-button" type="submit">
+                  <i class="fa-solid fa-plus"></i>
+                  <span id="linkSubmitText">إضافة الرابط</span>
+                </button>
+                <button id="cancelEditButton" class="secondary-button hidden" type="button">
+                  إلغاء التعديل
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="panel links-list-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>الروابط الحالية</h2>
+                <p>اسحبي البطاقات لتغيير الترتيب.</p>
+              </div>
+              <span id="linksCount" class="count-chip">0 رابط</span>
+            </div>
+
+            <div id="adminLinksList" class="admin-links-list">
+              <div class="empty-state">
+                <i class="fa-solid fa-link"></i>
+                <p>لا توجد روابط بعد.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="tab-analytics" class="tab-panel">
+        <div class="analytics-actions">
+          <button id="refreshAnalytics" class="secondary-button" type="button">
+            <i class="fa-solid fa-rotate"></i>
+            تحديث البيانات
+          </button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+            <div>
+              <span>زيارات الصفحة</span>
+              <strong id="totalViews">0</strong>
+            </div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-arrow-pointer"></i></div>
+            <div>
+              <span>إجمالي النقرات</span>
+              <strong id="totalClicks">0</strong>
+            </div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div>
+              <span>معدل النقر</span>
+              <strong id="clickRate">0%</strong>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>النقرات حسب الرابط</h2>
+              <p>تعرفي على الروابط الأكثر تفاعلًا.</p>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="analytics-table">
+              <thead>
+                <tr>
+                  <th>الرابط</th>
+                  <th>الحالة</th>
+                  <th>عدد النقرات</th>
+                </tr>
+              </thead>
+              <tbody id="analyticsTableBody">
+                <tr>
+                  <td colspan="3" class="empty-table">لا توجد بيانات بعد.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
