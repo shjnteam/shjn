@@ -26,6 +26,40 @@ body {
   overflow-x: hidden;
 }
 
+.admin-access-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 30;
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #4f5940;
+  box-shadow: 0 10px 26px rgba(71, 80, 55, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.admin-access-button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 30px rgba(71, 80, 55, 0.18);
+}
+
+.admin-access-button i {
+  font-size: 15px;
+}
+
 .decor,
 .vase {
   position: fixed;
@@ -447,4 +481,18 @@ textarea {
     right: -6px;
     top: 10px;
   }
+  .admin-access-button {
+    top: 12px;
+    left: 12px;
+    min-height: 38px;
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+
 }
+
+
+
+
+
+

@@ -42,9 +42,9 @@
     currentSettings = settings;
     const root = document.documentElement;
 
-    const backgroundColor = settings.background_color || "#f5f2e8";
-    const buttonColor = settings.button_color || "#6f7654";
-    const buttonTextColor = settings.button_text_color || "#ffffff";
+    const backgroundColor = settings.background_color || "#daddc6";
+    const buttonColor = settings.button_color || "#8c9872";
+    const buttonTextColor = settings.button_text_color || "#2f3325";
     const radius = Number(settings.button_radius || 18);
     const shadow = settings.button_shadow
       ? "0 14px 35px rgba(58, 61, 43, 0.18)"

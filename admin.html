@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex,nofollow" />
-  <meta name="theme-color" content="#6f7654" />
+  <meta name="theme-color" content="#daddc6" />
   <title>لوحة تحكم روابط شَجَن</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,13 +21,13 @@
       <p id="authDescription">سجّلي الدخول لإدارة الصفحة.</p>
 
       <div id="localModeNotice" class="notice warning hidden">
-        وضع تجريبي محلي: البيانات محفوظة في هذا المتصفح فقط. فعّلي Supabase قبل النشر الفعلي.
+        لم يتم ربط Supabase بعد. يمكنك الدخول تجريبيًا باسم المستخدم وكلمة المرور المحددين في config.js، لكن التعديلات المشتركة لجميع الزوار تتطلب ربط Supabase.
       </div>
 
       <div id="loginFields">
         <label class="field">
-          <span>البريد الإلكتروني</span>
-          <input id="loginEmail" type="email" autocomplete="username" required />
+          <span>اسم المستخدم</span>
+          <input id="loginUsername" type="text" autocomplete="username" placeholder="اسم المستخدم" required />
         </label>
         <label class="field">
           <span>كلمة المرور</span>

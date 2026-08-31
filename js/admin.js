@@ -84,8 +84,8 @@
   async function initializeAuth() {
     if (!Shajan.isConfigured()) {
       localModeNotice.classList.remove("hidden");
-      loginFields.classList.add("hidden");
-      loginButton.innerHTML = '<i class="fa-solid fa-flask"></i> دخول الوضع التجريبي';
+      loginFields.classList.remove("hidden");
+      loginButton.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> دخول';
       modeBadge.textContent = "وضع محلي";
       return;
     }
@@ -101,20 +101,39 @@
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    if (!Shajan.isConfigured()) {
-      showDashboard();
-      return;
-    }
-
-    const email = document.getElementById("loginEmail").value.trim();
+    const username = document.getElementById("loginUsername").value.trim();
     const password = document.getElementById("loginPassword").value;
+    const config = window.SHAGEN_CONFIG || {};
+    const expectedUsername = String(config.adminUsername || "admin").trim();
     const original = '<i class="fa-solid fa-right-to-bracket"></i> دخول';
 
     try {
       setLoading(loginButton, true, original);
-      const { error } = await Shajan.getClient().auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      showDashboard();
+
+      if (!username || username !== expectedUsername) {
+        throw new Error("اسم المستخدم أو كلمة المرور غير صحيحة.");
+      }
+
+      if (!Shajan.isConfigured()) {
+        if (password !== String(config.localAdminPassword || "")) {
+          throw new Error("اسم المستخدم أو كلمة المرور غير صحيحة.");
+        }
+        sessionStorage.setItem("shajan_local_admin", "1");
+        await showDashboard();
+        return;
+      }
+
+      const adminEmail = String(config.adminEmail || "").trim();
+      if (!adminEmail || adminEmail.includes("YOUR_")) {
+        throw new Error("أضيفي adminEmail داخل ملف js/config.js أولًا.");
+      }
+
+      const { error } = await Shajan.getClient().auth.signInWithPassword({
+        email: adminEmail,
+        password
+      });
+      if (error) throw new Error("اسم المستخدم أو كلمة المرور غير صحيحة.");
+      await showDashboard();
     } catch (error) {
       showToast(error.message || "تعذر تسجيل الدخول.", "error");
     } finally {
@@ -128,6 +147,7 @@
       dashboard.classList.add("hidden");
       authScreen.classList.remove("hidden");
     } else {
+      sessionStorage.removeItem("shajan_local_admin");
       dashboard.classList.add("hidden");
       authScreen.classList.remove("hidden");
     }
@@ -174,13 +194,13 @@
     settingsFields.bio.value = settings.bio || "";
     settingsFields.footerText.value = settings.footer_text || "";
     settingsFields.logoUrl.value = settings.logo_url || "";
-    settingsFields.backgroundColor.value = settings.background_color || "#f5f2e8";
-    settingsFields.backgroundColorText.value = settings.background_color || "#f5f2e8";
+    settingsFields.backgroundColor.value = settings.background_color || "#daddc6";
+    settingsFields.backgroundColorText.value = settings.background_color || "#daddc6";
     settingsFields.backgroundImageUrl.value = settings.background_image_url || "";
-    settingsFields.buttonColor.value = settings.button_color || "#6f7654";
-    settingsFields.buttonColorText.value = settings.button_color || "#6f7654";
-    settingsFields.buttonTextColor.value = settings.button_text_color || "#ffffff";
-    settingsFields.buttonTextColorText.value = settings.button_text_color || "#ffffff";
+    settingsFields.buttonColor.value = settings.button_color || "#8c9872";
+    settingsFields.buttonColorText.value = settings.button_color || "#8c9872";
+    settingsFields.buttonTextColor.value = settings.button_text_color || "#2f3325";
+    settingsFields.buttonTextColorText.value = settings.button_text_color || "#2f3325";
     settingsFields.buttonRadius.value = String(settings.button_radius || 18);
     settingsFields.buttonShadow.checked = Boolean(settings.button_shadow);
 

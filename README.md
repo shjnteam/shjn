@@ -49,7 +49,10 @@
 ```js
 window.SHAGEN_CONFIG = {
   supabaseUrl: "https://YOUR_PROJECT.supabase.co",
-  supabaseAnonKey: "YOUR_ANON_PUBLIC_KEY"
+  supabaseAnonKey: "YOUR_ANON_PUBLIC_KEY",
+  adminUsername: "admin",
+  adminEmail: "your-admin-email@example.com",
+  localAdminPassword: "ChangeMe2026!"
 };
 ```
 
@@ -98,3 +101,13 @@ window.SHAGEN_CONFIG = {
 - الإحصاءات في الوضع المحلي تخص المتصفح نفسه فقط.
 - الإحصاءات في وضع Supabase تجمع بيانات جميع الزوار.
 - لتغيير رقم واتساب الافتراضي عدّلي الرابط من لوحة التحكم.
+
+
+## دخول لوحة الإدارة باسم مستخدم وكلمة مرور
+
+- افتحي `admin.html`.
+- اسم المستخدم هو القيمة الموجودة في `adminUsername` داخل `js/config.js`.
+- كلمة المرور هي كلمة مرور مستخدم الإدارة الذي أنشأتِه في Supabase Authentication.
+- `adminEmail` هو بريد ذلك المستخدم، لكنه لا يظهر كحقل دخول للزائرة؛ الإدخال في صفحة الإدارة يكون **اسم مستخدم + كلمة مرور** فقط.
+- للاختبار المحلي قبل ربط Supabase يستخدم المشروع `localAdminPassword`، لكن هذا ليس حماية مناسبة لموقع منشور.
+- لكي تنعكس إضافة/تعديل/حذف الروابط على الموقع لجميع الزوار، يجب إكمال ربط Supabase وتشغيل `supabase/schema.sql`.
