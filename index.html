@@ -6,6 +6,10 @@
   <meta name="description" content="جميع روابط شَجَن في مكان واحد - يمكنكم التواصل معنا عبر">
   <meta name="theme-color" content="#ffffff">
   <title>شَجَن</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
   <style>
     * {
       box-sizing: border-box;
@@ -21,7 +25,7 @@
       min-height: 100vh;
       background: #ffffff;
       color: #2f3325;
-      font-family: "Cairo", "Tahoma", "Arial", sans-serif;
+      font-family: "Tajawal", sans-serif;
       display: flex;
       justify-content: center;
       padding: 44px 16px 28px;
@@ -30,11 +34,21 @@
     .page {
       width: min(100%, 680px);
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .brand-logo {
       display: block;
-      width: min(220px, 52vw);
+      width: min(180px, 45vw);
       height: auto;
       margin: 0 auto 14px;
       padding: 0;
@@ -44,22 +58,16 @@
       filter: drop-shadow(0 10px 16px rgba(60, 70, 42, 0.28));
     }
 
-    .brand-title {
-      margin: 0 0 6px;
-      color: #5f684d;
-      font-size: clamp(2rem, 7vw, 3.1rem);
-      font-weight: 800;
-      line-height: 1.15;
-    }
-
     .bio {
       margin: 4px 0 28px;
       font-size: 1.05rem;
       font-weight: 500;
       color: #454a3a;
+      font-family: "Tajawal", sans-serif;
     }
 
     .links {
+      width: 100%;
       display: grid;
       gap: 16px;
     }
@@ -71,12 +79,13 @@
       grid-template-columns: 46px 1fr 46px;
       align-items: center;
       text-decoration: none;
-      background: #8c9872;
+      background: #a3b088; /* اللون الأخف المعتمد للبطاقات والأيقونات */
       color: #ffffff;
       border-radius: 22px;
       padding: 10px 16px;
       font-size: 1.02rem;
       font-weight: 700;
+      font-family: "Tajawal", sans-serif;
       box-shadow: 0 8px 18px rgba(80, 90, 60, 0.12);
       transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
       -webkit-tap-highlight-color: transparent;
@@ -93,7 +102,7 @@
     }
 
     .link-button:focus-visible {
-      outline: 3px solid rgba(140, 152, 114, 0.35);
+      outline: 3px solid rgba(163, 176, 136, 0.35);
       outline-offset: 4px;
     }
 
@@ -118,6 +127,7 @@
       text-align: center;
       direction: ltr;
       unicode-bidi: plaintext;
+      font-family: "Tajawal", sans-serif;
     }
 
     .label.ar {
@@ -136,6 +146,7 @@
       font-size: .92rem;
       font-weight: 600;
       color: #666b5c;
+      font-family: "Tajawal", sans-serif;
     }
 
     @media (max-width: 480px) {
@@ -175,8 +186,7 @@
   <main class="page">
     <header>
       <img class="brand-logo" src="https://i.top4top.io/p_3899n3fap1.png" alt="شعار شَجَن">
-      <h1 class="brand-title">شَجَن</h1>
-      <p class="bio">جميع روابطنا في مكان واحد -  يمكنكم التواصل معنا عبر </p>
+      <p class="bio">جميع روابطنا في مكان واحد - يمكنكم التواصل معنا عبر</p>
     </header>
 
     <section class="links">
